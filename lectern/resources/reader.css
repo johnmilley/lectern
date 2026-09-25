@@ -1,0 +1,154 @@
+/* Lectern reading pane — set like a traditional English office book:
+   black text, red rubrics, small capitals, generous margins. */
+
+@font-face { font-family: "EB Garamond"; src: url("fonts/EBGaramond-VF.ttf") format("truetype");
+             font-weight: 400 800; font-style: normal; }
+@font-face { font-family: "EB Garamond"; src: url("fonts/EBGaramond-Italic-VF.ttf") format("truetype");
+             font-weight: 400 800; font-style: italic; }
+
+:root {
+  --bg: #fbf8f1; --ink: #1d1813; --muted: #6f6556; --rule: #e3dccd;
+  --red: #a3161b; --sel: #f1e1b0; --mark: #f6dc8c; --panel: #f3eee2;
+}
+.theme-sepia { --bg: #f3ead6; --ink: #35291c; --muted: #7a6a54; --rule: #dccfb3;
+               --red: #972a17; --sel: #e8d49b; --mark: #efcf78; --panel: #ebe0c7; }
+.theme-night { --bg: #17150f; --ink: #e7e0d2; --muted: #a89d8a; --rule: #37322a;
+               --red: #e27b62; --sel: #4a3f22; --mark: #6b5718; --panel: #211e17; }
+.no-red { --red: var(--ink); }
+
+html { background: var(--bg); color: var(--ink); font-size: var(--fs, 20px); }
+body { margin: 0; font-family: "EB Garamond", "Garamond", "Georgia", serif;
+       font-variant-numeric: oldstyle-nums; font-feature-settings: "kern", "liga", "onum";
+       line-height: 1.55; -webkit-font-smoothing: antialiased; }
+.page { max-width: 34em; margin: 0 auto; padding: 2.2em 1.6em 4em; }
+a { color: var(--red); text-decoration: none; }
+a:hover { text-decoration: underline; }
+::selection { background: var(--sel); }
+code { font-family: ui-monospace, monospace; font-size: .8em; }
+
+.sc, .lead { font-variant-caps: small-caps; letter-spacing: .02em; }
+
+/* ---- headings */
+.chap-head { text-align: center; margin-bottom: 1.6em; }
+.book-title { font-variant-caps: all-small-caps; letter-spacing: .12em; font-size: 1.25em; color: var(--red);
+              margin-bottom: .6em; }
+.running-title { font-variant-caps: all-small-caps; letter-spacing: .14em; font-size: .8em; color: var(--muted); }
+.chap-title { font-weight: 400; font-size: 1.55em; margin: .2em 0 .1em; font-variant-caps: small-caps;
+              letter-spacing: .06em; }
+.chap-title .alt { color: var(--muted); font-size: .7em; }
+.subtitle { font-style: italic; color: var(--muted); }
+.crosslink { font-size: .8em; margin-top: .4em; font-style: italic; }
+.heading { font-weight: 400; font-style: italic; color: var(--red); text-align: center; font-size: .95em;
+           margin: 1.5em 0 .5em; break-after: avoid; }
+.no-headings .heading { display: none; }
+
+/* ---- Bible text */
+.text { hyphens: auto; }
+.prose { margin: 0 0 .15em; text-align: justify; text-indent: 1.2em; }
+.heading + .prose, .title + .prose, .text > .prose:first-child { text-indent: 0; }
+.poetry { margin: .35em 0 .5em; }
+.line { padding-left: 2.2em; text-indent: -1.4em; }
+.line.indent { padding-left: 3.4em; }
+.title { font-style: italic; font-size: .92em; color: var(--muted); margin: .2em 0 .6em; text-align: center; }
+.v { border-radius: 2px; transition: background .25s; }
+.v.sel { background: var(--sel); }
+.v.flash { background: var(--mark); }
+.vn { color: var(--red); font-size: .58em; font-weight: 500; cursor: pointer; padding: 0 .18em 0 .12em;
+      vertical-align: .55em; line-height: 0; font-variant-numeric: lining-nums; user-select: none; }
+.vn:hover { text-decoration: underline; }
+.no-verse-numbers .vn { display: none; }
+.chapnum { float: left; font-size: 3.1em; line-height: .82; color: var(--red); padding: .06em .14em 0 0;
+           cursor: pointer; font-variant-numeric: lining-nums; user-select: none; }
+.poetry .chapnum { font-size: 2.2em; margin-left: -1.2em; padding-right: .25em; }
+.fn, .dn { color: var(--red); font-size: .6em; font-style: italic; cursor: pointer; vertical-align: .6em;
+           line-height: 0; padding: 0 .08em; user-select: none; }
+.no-fn-markers .fn, .no-fn-markers .dn { display: none; }
+.selah { font-style: italic; color: var(--muted); float: right; }
+mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 .05em; }
+
+/* ---- notes */
+.endnotes { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--rule); font-size: .78em;
+            line-height: 1.45; color: var(--ink); }
+.endnotes h4 { font-weight: 400; font-variant-caps: all-small-caps; letter-spacing: .12em; color: var(--red);
+               margin: 1.2em 0 .4em; font-size: 1.05em; }
+.notes { list-style: none; padding: 0; margin: 0; }
+.notes li { margin: 0 0 .35em; padding-left: 3.2em; text-indent: -3.2em; }
+.notes .nref { display: inline-block; min-width: 3em; text-indent: 0; font-variant-numeric: lining-nums;
+               color: var(--muted); }
+.notes .mk { font-style: italic; color: var(--red); }
+.notes-xr li { break-inside: avoid; }
+#popover { position: fixed; z-index: 10; max-width: 24em; background: var(--panel); color: var(--ink);
+           border: 1px solid var(--rule); border-radius: 6px; padding: .6em .8em; font-size: .8em;
+           line-height: 1.45; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+
+.pager { display: flex; justify-content: space-between; margin-top: 3em; padding-top: 1em;
+         border-top: 1px solid var(--rule); font-variant-caps: small-caps; letter-spacing: .03em; }
+
+/* ---- Psalter & Office */
+.psalter .pv { margin: 0 0 .28em; padding-left: 1.9em; text-indent: -1.9em; text-align: left; }
+.pvn { display: inline-block; width: calc(1.9em / .7); text-indent: 0; color: var(--red); font-size: .7em;
+       font-variant-numeric: lining-nums; vertical-align: .1em; cursor: pointer; user-select: none; }
+.no-verse-numbers .pvn { visibility: hidden; }
+.star, .colon { color: var(--red); padding: 0 .1em; }
+.dropcap { float: left; font-size: 2.9em; line-height: .8; color: var(--red); padding: .07em .1em 0 0; }
+.pv .dropcap { margin-left: 0; }
+.pv:has(.dropcap) { text-indent: 0; display: flow-root; }
+.pv:has(.dropcap) .pvn { display: none; }
+.psalm, .canticle { margin: 0 0 2.2em; }
+.ps-head { display: flex; align-items: baseline; gap: .8em; margin: 0 0 .7em; padding-bottom: .15em;
+           border-bottom: 1px solid var(--rule); }
+.ps-num { font-variant-caps: small-caps; letter-spacing: .05em; font-size: 1.1em; }
+.ps-latin { font-style: italic; color: var(--red); }
+.ps-latin.big { font-size: 1.15em; }
+.ps-head .range { margin-left: auto; color: var(--muted); font-size: .8em; font-style: italic; }
+.ps-section { margin: 1.4em 0 .5em; text-align: center; }
+.ps-section .hebrew { font-variant-caps: small-caps; letter-spacing: .05em; }
+.gloria { margin-top: .6em; font-style: italic; }
+.gloria p { margin: 0; padding-left: 1.9em; text-indent: -1.9em; }
+.gloria p::before { content: ""; display: inline-block; width: 1.9em; }
+.v.sel, .pv.sel { background: var(--sel); }
+.pv.flash { background: var(--mark); }
+
+.compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6em; }
+.psalter.compare { font-size: .92em; }
+.page:has(.compare) { max-width: 52em; }
+.compare-row .rsv .poetry { margin: 0; }
+.compare-row .rsv .title { display: none; }
+
+.rubric { color: var(--red); font-style: italic; font-size: .9em; margin: .5em 0 .8em; }
+.office-section { font-weight: 400; font-variant-caps: all-small-caps; letter-spacing: .12em; text-align: center;
+                  font-size: 1.1em; margin: 2.2em 0 .6em; color: var(--red); }
+.office-nav { display: flex; justify-content: center; gap: 1.4em; font-size: .78em; margin-top: .7em;
+              font-variant-caps: small-caps; letter-spacing: .04em; }
+.office-foot { margin-top: 2.4em; text-align: center; }
+.lesson-form { display: flex; gap: .5em; margin: .2em 0 .8em; }
+.lesson-form input { flex: 1; }
+.lesson { margin-bottom: .5em; }
+.lesson .prose:first-child { text-indent: 0; }
+.passage-ref { font-variant-caps: small-caps; color: var(--muted); }
+.canticle-choice { display: flex; gap: 1em; justify-content: center; font-size: .78em; margin: 1.6em 0 .6em; }
+.canticle-choice a { color: var(--muted); font-style: italic; }
+.canticle-choice a.on { color: var(--red); font-style: normal; font-variant-caps: small-caps; letter-spacing: .04em; }
+
+/* ---- forms, search */
+input, select, button { font: inherit; font-size: .85em; color: var(--ink); background: var(--bg);
+                        border: 1px solid var(--rule); border-radius: 5px; padding: .3em .55em; }
+button { cursor: pointer; background: var(--panel); }
+input:focus, select:focus { outline: 2px solid var(--sel); }
+.search-head { margin-bottom: 1.2em; text-align: center; }
+.search-form { display: flex; gap: .5em; margin: .8em 0; }
+.search-form input { flex: 1; }
+.search-count { color: var(--muted); font-style: italic; margin: .3em 0; }
+.search-tips { color: var(--muted); font-size: .75em; }
+.chips { display: flex; flex-wrap: wrap; gap: .35em; justify-content: center; margin: .6em 0; }
+.chip { font-size: .75em; border: 1px solid var(--rule); border-radius: 999px; padding: .05em .6em; }
+.chip span { color: var(--muted); }
+.results { list-style: none; padding: 0; margin: 0; }
+.results li { margin: 0 0 .9em; }
+.rref { display: block; font-variant-caps: small-caps; letter-spacing: .03em; font-size: .9em; }
+.rtext { display: block; }
+
+.welcome p { text-align: justify; }
+.center { text-align: center; }
+.button { display: inline-block; border: 1px solid var(--red); border-radius: 6px; padding: .35em 1em;
+          font-variant-caps: small-caps; letter-spacing: .04em; }

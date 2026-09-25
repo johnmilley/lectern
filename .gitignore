@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+build/
+dist/
+*.egg-info/
+# Your own copy of the Bible text: never commit or share it.
+*.mobi
+*.azw
+*.azw3
+*.prc
+*.sqlite
+
+# Web export of the Bible text, and the assembled site
+lectern-rsv2ce*.json*
+_site/

@@ -1,0 +1,11 @@
+{
+  "name": "Lectern",
+  "short_name": "Lectern",
+  "description": "The RSV-2CE and the Coverdale Psalter, arranged for the Daily Office",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbf8f1",
+  "theme_color": "#f3eee2",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
